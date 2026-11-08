@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY System Mini-Course Slides | Rapid Impact Accelerator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px clamp(16px, 4vw, 48px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        header a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(24px, 5vw, 80px);
+        }
+
+        .slide-wrapper {
+            width: min(960px, 100%);
+            display: grid;
+            gap: 24px;
+        }
+
+        .slide {
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.15), rgba(8, 47, 73, 0.8));
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 24px;
+            padding: clamp(24px, 4vw, 48px);
+            box-shadow: 0 25px 60px rgba(8, 47, 73, 0.45);
+            min-height: 460px;
+            display: grid;
+            gap: clamp(16px, 3vw, 28px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .slide-module {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            width: fit-content;
+        }
+
+        .slide-number {
+            font-size: 0.85rem;
+            color: rgba(226, 232, 240, 0.6);
+            font-weight: 600;
+        }
+
+        .slide h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #f8fafc;
+        }
+
+        .slide ul {
+            list-style: disc;
+            padding-left: clamp(18px, 3vw, 32px);
+            display: grid;
+            gap: 12px;
+            font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+            line-height: 1.7;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 16px;
+            padding: 16px 24px;
+        }
+
+        .controls button {
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: #0f172a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .controls button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
+        }
+
+        .progress {
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .toggle-notes {
+            align-self: center;
+            margin-top: 12px;
+            background: none;
+            color: #38bdf8;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .notes-panel {
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+            padding: clamp(20px, 4vw, 36px);
+            display: none;
+        }
+
+        .notes-panel.active {
+            display: block;
+        }
+
+        .notes-panel h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #e2e8f0;
+        }
+
+        .notes-panel p {
+            color: #cbd5f5;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .controls button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DIY System Mini-Course Slides</h1>
+        <a href="index.html">Back to Rapid Impact Accelerator</a>
+    </header>
+    <main>
+        <div class="slide-wrapper">
+            <article class="slide" id="slide"></article>
+            <div class="controls">
+                <button id="prev">Previous</button>
+                <div class="progress" id="progress"></div>
+                <button id="next">Next</button>
+            </div>
+            <button class="toggle-notes" id="toggle-notes">Show speaker notes</button>
+        </div>
+    </main>
+    <section class="notes-panel" id="notes"></section>
+    <script>
+        const deck = [
+            {
+                module: 'Title and Outcomes',
+                slides: [
+                    {
+                        number: 0,
+                        title: 'Slide 0 - Title',
+                        bullets: [
+                            'The DIY System Mini-Course',
+                            'Turn Your Profile Into a Magnet in 30 Minutes',
+                            'Promise: Independence, algorithm-friendly, long-term edge'
+                        ],
+                        notes: 'Welcome to The DIY System Mini-Course: Turn Your Profile Into a Magnet in 30 Minutes. The promise is independence so you can update your profile as you grow, keep it algorithm-friendly, and protect your edge long term.'
+                    },
+                    {
+                        number: 1,
+                        title: "Slide 1 - What You'll Learn",
+                        bullets: [
+                            'Choose crisp positioning',
+                            'Build a 15-term keyword map',
+                            'Write a high-converting headline and About',
+                            'Optimize Experience, Featured, Settings',
+                            'Track metrics and iterate'
+                        ],
+                        notes: 'By the end, you will choose clear positioning, build a focused keyword map, write a headline and About that convert, align Experience and Featured for credibility, and track simple metrics to iterate confidently.'
+                    }
+                ]
+            },
+            {
+                module: 'Module 1 - Positioning That Wins',
+                slides: [
+                    {
+                        number: 2,
+                        title: 'Slide 2 - Why Positioning First',
+                        bullets: [
+                            'If you try to serve everyone, you serve no one',
+                            'Positioning simplifies every other decision'
+                        ],
+                        notes: 'If your profile tries to be everything to everyone, it becomes nothing to anyone. Positioning is the decision that makes every other decision simpler. We start here so every word after this pulls in the same direction.'
+                    },
+                    {
+                        number: 3,
+                        title: 'Slide 3 - One-Line Positioning Formula',
+                        bullets: [
+                            'Consultants: I help [WHO] get [RESULT] without [PAIN] via [MECHANISM], backed by [PROOF]',
+                            'Job-seekers: [TITLE] who [RESULT/PROOF] in [INDUSTRY], targeting [ROLES] to deliver [OUTCOME]'
+                        ],
+                        notes: 'Use one of these to create your one-liner. Consultants can map WHO, RESULT, PAIN, MECHANISM, and PROOF. Job-seekers can use TITLE, RESULT or PROOF, INDUSTRY, target ROLES, and OUTCOME.'
+                    },
+                    {
+                        number: 4,
+                        title: 'Slide 4 - Define the Pieces',
+                        bullets: [
+                            'WHO, RESULT, PAIN',
+                            'MECHANISM, PROOF (numbers, brands, years)'
+                        ],
+                        notes: 'WHO is your specific audience. RESULT is a business outcome. PAIN is what they are avoiding. MECHANISM is how you deliver results. PROOF covers numbers, brands, certifications, or years.'
+                    },
+                    {
+                        number: 5,
+                        title: 'Slide 5 - Examples (Snapshot)',
+                        bullets: [
+                            'B2B SaaS copywriter: demos up 30-60% without more ad spend',
+                            'Clinical research ops: faster activation, fewer deviations',
+                            'PM fintech: reduce false positives, approve good users'
+                        ],
+                        notes: 'Examples: B2B SaaS copywriter helping founders lift demo bookings 30-60% without more ad spend; clinical research ops improving activation speed and compliance; fintech PM reducing false positives while approving more good users.'
+                    },
+                    {
+                        number: 6,
+                        title: 'Slide 6 - Decide and Commit (90 Days)',
+                        bullets: [
+                            'Choose 1 WHO, 1 flagship RESULT, 1 MECHANISM',
+                            'List 3 PROOF points'
+                        ],
+                        notes: 'Choose one WHO for 90 days, one flagship RESULT you can defend, one MECHANISM you can explain simply, and list three PROOF points. Clarity beats breadth.'
+                    },
+                    {
+                        number: 7,
+                        title: 'Slide 7 - Action and Pitfalls',
+                        bullets: [
+                            'Write one-liner plus 3 proof bullets',
+                            'Avoid vagueness, laundry lists, no proof'
+                        ],
+                        notes: 'Action: write your one-liner and three proof bullets now. Pitfalls: vagueness, laundry lists of services, and zero proof. Tighten until it fits in one breath.'
+                    }
+                ]
+            },
+            {
+                module: 'Module 2 - Keyword Map for Visibility',
+                slides: [
+                    {
+                        number: 8,
+                        title: 'Slide 8 - Why Keywords',
+                        bullets: [
+                            'How platforms understand you',
+                            'Be found consistently by the right people'
+                        ],
+                        notes: 'Keywords tell the platform who you are and who should find you. Done right, you will consistently appear in searches from the right people.'
+                    },
+                    {
+                        number: 9,
+                        title: 'Slide 9 - Harvest in 10 to 15 Minutes',
+                        bullets: [
+                            '5 job posts or client offers',
+                            '5 strong profiles',
+                            'Note repeated titles, skills, tools, industries'
+                        ],
+                        notes: 'Pull five job posts or client offers and five strong profiles. Note repeated titles, skills, tools, industries, and outcomes. This is your vocabulary source.'
+                    },
+                    {
+                        number: 10,
+                        title: 'Slide 10 - Build a 3-Tier Map (15 terms)',
+                        bullets: [
+                            'Tier 1: identifiers (3-5)',
+                            'Tier 2: skills, tools, outcomes (5-7)',
+                            'Tier 3: context, industry, use cases (3-5)'
+                        ],
+                        notes: 'Tier 1 is your primary identifiers. Tier 2 covers core skills, tools, or outcomes. Tier 3 includes context terms like industry and use cases. Aim for 3-5, 5-7, and 3-5 terms respectively.'
+                    },
+                    {
+                        number: 11,
+                        title: 'Slide 11 - Placement Strategy',
+                        bullets: [
+                            'Headline: 1-2 Tier 1 plus 1 Tier 2',
+                            'About: Tier 1 early; spread Tier 2-3',
+                            'Titles, bullets, Skills, Featured labels'
+                        ],
+                        notes: 'Put one to two Tier 1 terms and one Tier 2 term in your headline. Use Tier 1 in your first two About lines and distribute Tier 2-3 naturally across About, titles, bullets, Skills, and Featured labels.'
+                    },
+                    {
+                        number: 12,
+                        title: 'Slide 12 - Rules and Action',
+                        bullets: [
+                            'Write for humans; use synonyms',
+                            'Update quarterly',
+                            'Build your 15 terms; highlight headline priorities'
+                        ],
+                        notes: 'Write for humans first, use synonyms your audience uses, and review quarterly. Action: build your 15-term map and highlight the three to four terms you will prioritize up top.'
+                    }
+                ]
+            },
+            {
+                module: 'Module 3 - Headlines That Get Clicks',
+                slides: [
+                    {
+                        number: 13,
+                        title: 'Slide 13 - First 80 Characters Matter',
+                        bullets: [
+                            'Hook in under 2 seconds',
+                            'Mobile skim test'
+                        ],
+                        notes: 'Your headline is the first filter. On mobile, only the first 80 characters show. Front-load value so the right people immediately recognize you are relevant.'
+                    },
+                    {
+                        number: 14,
+                        title: 'Slide 14 - Pick a Proven Formula',
+                        bullets: [
+                            'Role + ICP + Outcome',
+                            'Outcome + Mechanism + Proof',
+                            'Title | Keywords | Niche',
+                            'I help WHO do WHAT',
+                            'Role + Category + Credibility'
+                        ],
+                        notes: 'Choose one proven structure: Role plus ICP plus Outcome; Outcome plus Mechanism plus Proof; Title | Keywords | Niche; I help WHO do WHAT; or Role plus Category plus Credibility.'
+                    },
+                    {
+                        number: 15,
+                        title: 'Slide 15 - Make It Punchy',
+                        bullets: [
+                            'Outcome verbs, numbers, names',
+                            'Avoid buzzword salads'
+                        ],
+                        notes: 'Use outcome verbs, include numbers or named brands when you can, and avoid vague buzzwords. Specifics create credibility and clicks.'
+                    },
+                    {
+                        number: 16,
+                        title: 'Slide 16 - Examples (Snapshot)',
+                        bullets: [
+                            'Fractional CMO -> Pipeline in 90 Days | Ex-Adobe',
+                            'Clinical Ops | Faster Activation, Fewer Deviations',
+                            'Tech Writer | Docs that Cut Tickets 30%'
+                        ],
+                        notes: 'Examples: Fractional CMO for B2B startups promising pipeline in 90 days, clinical ops highlighting faster activation and fewer deviations, and a technical writer whose docs cut support tickets by 30%.'
+                    },
+                    {
+                        number: 17,
+                        title: 'Slide 17 - Test and Iterate',
+                        bullets: [
+                            '7-day metric check',
+                            'Rotate variants if no lift'
+                        ],
+                        notes: 'If search appearances and profile views do not rise 20-30% within seven days, rotate one of your alternate headline drafts. Small changes can produce big differences.'
+                    },
+                    {
+                        number: 18,
+                        title: 'Slide 18 - Action',
+                        bullets: [
+                            'Draft 3 headlines; publish strongest',
+                            'Save 2 for testing'
+                        ],
+                        notes: 'Draft three headlines now. Publish your strongest and save two for testing next week.'
+                    }
+                ]
+            },
+            {
+                module: 'Module 4 - About Section That Converts',
+                slides: [
+                    {
+                        number: 19,
+                        title: 'Slide 19 - Treat It Like a Landing Page',
+                        bullets: [
+                            'Who you help, how, why credible, what next',
+                            'Keep it scannable'
+                        ],
+                        notes: 'Your About should quickly explain who you help, how you help, why you are credible, and what to do next. Keep it scannable.'
+                    },
+                    {
+                        number: 20,
+                        title: 'Slide 20 - 5-Part Structure',
+                        bullets: [
+                            'Hook',
+                            'Snapshot',
+                            'Value',
+                            'Proof bullets',
+                            'CTA'
+                        ],
+                        notes: 'The structure: Hook, Snapshot, Value Proposition, Proof bullets, and CTA. This balances clarity with persuasion.'
+                    },
+                    {
+                        number: 21,
+                        title: 'Slide 21 - Fill-In Template (Overview)',
+                        bullets: [
+                            'Hook: [WHO] + [PAIN] -> [OUTCOME]',
+                            'Snapshot: [Years/brands/results]',
+                            'Method: [Step 1-3] -> [Benefit]',
+                            'Proof bullets (CAR)',
+                            'CTA'
+                        ],
+                        notes: 'Use the template: Hook with WHO, PAIN, and OUTCOME; Snapshot with years, brands, and results; Method with steps and benefit; Proof bullets using the CAR format; and a clear CTA.'
+                    },
+                    {
+                        number: 22,
+                        title: 'Slide 22 - Example: Consultant (SaaS)',
+                        bullets: [
+                            'Trials -> paid without more ad spend',
+                            'Proof: activation up, churn down'
+                        ],
+                        notes: 'Example: PLG SaaS teams struggle to convert trials. This consultant turns onboarding and lifecycle messages into revenue without more ad spend, with wins at Paddle and YC startups and metrics like trials-to-paid jumping 9% to 17% in 90 days.'
+                    },
+                    {
+                        number: 23,
+                        title: 'Slide 23 - Example: Clinical Research Ops',
+                        bullets: [
+                            'Faster activation, fewer deviations',
+                            'Proof: -35% deviations, audit readiness up'
+                        ],
+                        notes: 'Example: Timelines slip when SOPs are unclear. This expert enables faster activation and fewer deviations without burning out staff, mapping critical paths, simplifying SOPs, and installing quality checks.'
+                    },
+                    {
+                        number: 24,
+                        title: 'Slide 24 - Example: Job-Seeking PM',
+                        bullets: [
+                            'Approve good users, reduce false positives',
+                            'Proof: 2x activation, -31% false positives'
+                        ],
+                        notes: 'Example: Great fintech products die in onboarding. This PM designs flows that approve more good users and cut false positives, with 2x activation and 31% fewer false positives, plus an SDK adopted by 12 partners.'
+                    },
+                    {
+                        number: 25,
+                        title: 'Slide 25 - Micro-About and Tips',
+                        bullets: [
+                            '5-sentence version',
+                            'First person, short paragraphs, numbers over adjectives'
+                        ],
+                        notes: 'Create a five-sentence micro version for skimmers. Write in first person, keep paragraphs short, prefer numbers over adjectives, and put contact info and CTA at the end.'
+                    },
+                    {
+                        number: 26,
+                        title: 'Slide 26 - Action',
+                        bullets: [
+                            'Draft long About plus micro version',
+                            'Add contact and CTA'
+                        ],
+                        notes: 'Draft your full About and a micro version now. Add your contact details and a clear CTA.'
+                    }
+                ]
+            },
+            {
+                module: 'Module 5 - Experience, Featured, Settings',
+                slides: [
+                    {
+                        number: 27,
+                        title: 'Slide 27 - Align Everything',
+                        bullets: [
+                            'Titles, bullets, Featured, Skills, Settings'
+                        ],
+                        notes: 'Your Experience, Featured, Skills, and Settings should all reflect your positioning and keyword map. This is where you prove it.'
+                    },
+                    {
+                        number: 28,
+                        title: 'Slide 28 - Titles and CAR Bullets',
+                        bullets: [
+                            'Add context to titles',
+                            'Lead with results, then action'
+                        ],
+                        notes: 'Add context to titles to match your niche. Write three to five bullets per role using CAR: lead with the Result, then Action and relevant tool or method.'
+                    },
+                    {
+                        number: 29,
+                        title: 'Slide 29 - Featured and Proof',
+                        bullets: [
+                            'Pin 3 assets',
+                            'Keyword-rich labels'
+                        ],
+                        notes: 'Pin three assets that prove your claims, like case studies or portfolio samples, and label them with keyword-rich outcomes.'
+                    },
+                    {
+                        number: 30,
+                        title: 'Slide 30 - Skills, Recs, Settings',
+                        bullets: [
+                            'Pin 3 skills',
+                            'Ask 2 recs with prompt',
+                            'URL, contact, visibility, Open to Work or Business'
+                        ],
+                        notes: 'Pin the three skills that match your target. Request two recommendations with a prompt that tees up a specific result. Fix your URL, contact visibility, and relevant toggles.'
+                    },
+                    {
+                        number: 31,
+                        title: 'Slide 31 - Action',
+                        bullets: [
+                            'Update last two roles, Featured, Skills, Settings',
+                            'Send 2 recommendation requests'
+                        ],
+                        notes: 'Update titles and bullets for your last two roles, add three Featured items, pin skills, adjust settings, and send two recommendation requests.'
+                    }
+                ]
+            },
+            {
+                module: 'Toolkit, Plans, and QA',
+                slides: [
+                    {
+                        number: 32,
+                        title: 'Slide 32 - Toolkit (Downloads)',
+                        bullets: [
+                            'Positioning worksheet',
+                            'Keyword map',
+                            'Headline generator',
+                            'About builder',
+                            'CAR bullet bank',
+                            'Metrics tracker'
+                        ],
+                        notes: 'You get worksheets and templates for positioning, keyword mapping, headlines, About, CAR bullets, and a metrics tracker so you can implement quickly and reuse the system.'
+                    },
+                    {
+                        number: 33,
+                        title: 'Slide 33 - 24-Hour Sprint Plan',
+                        bullets: [
+                            'Hour 0: capture baseline metrics',
+                            'Hour 1: positioning and proof',
+                            'Hour 2: keyword map',
+                            'Hour 3: headline and micro-About',
+                            'Hour 4: Experience, Skills, Settings, Featured',
+                            'Hour 5 optional: post update to spark visits'
+                        ],
+                        notes: 'Hour 0 capture baseline metrics and export your profile. Hour 1 positioning and proof. Hour 2 keyword map. Hour 3 headline and micro-About. Hour 4 Experience, Skills, Settings, Featured. Hour 5 optional: post an update to spark visits.'
+                    },
+                    {
+                        number: 34,
+                        title: 'Slide 34 - 7-Day Momentum Plan',
+                        bullets: [
+                            'Daily: comment on 5 target posts',
+                            'Add 10 aligned connections with note',
+                            'Share one win and pin it',
+                            'Day 7 review metrics and iterate'
+                        ],
+                        notes: 'Daily for 10 minutes: thoughtful comments on five target posts and add ten aligned connections with a short note. Share one win this week and pin it. On day seven, review metrics and iterate headline or About intro if needed.'
+                    },
+                    {
+                        number: 35,
+                        title: 'Slide 35 - QA Checklist',
+                        bullets: [
+                            'Headline clarity',
+                            'Proof points',
+                            'Keyword placement',
+                            'Featured assets',
+                            'CTA visibility',
+                            'Mobile readability'
+                        ],
+                        notes: 'Confirm headline clarity in the first 80 characters, at least three proof points, natural keyword placement, Featured assets that prove claims, visible CTA and contact info, and mobile-friendly readability.'
+                    },
+                    {
+                        number: 36,
+                        title: 'Slide 36 - Closing',
+                        bullets: [
+                            'Repeatable system',
+                            'Iterate with data, not guesswork',
+                            'You control your profile and opportunities'
+                        ],
+                        notes: 'You now have a repeatable system: position, map keywords, write to outcomes, prove with evidence, and tune weekly. Iterate with data, not guesswork. You are in control of your profile and the opportunities it attracts.'
+                    },
+                    {
+                        number: 37,
+                        title: 'Slide 37 - Next Steps',
+                        bullets: [
+                            'Optional add-ons available on request',
+                            'Formatted slide deck',
+                            'Speaker-notes PDF',
+                            'Fillable worksheets branded to your offer'
+                        ],
+                        notes: 'If you want, I can deliver this as a formatted slide deck and a separate speaker-notes PDF, plus fillable worksheets branded to your offer.'
+                    }
+                ]
+            }
+        ];
+
+        const slides = deck.flatMap(group => group.slides.map(slide => ({
+            ...slide,
+            module: group.module
+        })));
+
+        const slideElement = document.getElementById('slide');
+        const progressElement = document.getElementById('progress');
+        const notesElement = document.getElementById('notes');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const toggleNotesButton = document.getElementById('toggle-notes');
+
+        let currentIndex = 0;
+
+        const renderSlide = (index) => {
+            const slide = slides[index];
+            slideElement.innerHTML = `
+                <div class="slide-module">${slide.module}<span class="slide-number"> · Slide ${slide.number}</span></div>
+                <h2>${slide.title}</h2>
+                <ul>
+                    ${slide.bullets.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            `;
+            progressElement.textContent = `Slide ${index + 1} of ${slides.length}`;
+            notesElement.innerHTML = `
+                <h3>Speaker notes for ${slide.title}</h3>
+                <p>${slide.notes}</p>
+            `;
+
+            prevButton.disabled = index === 0;
+            nextButton.disabled = index === slides.length - 1;
+        };
+
+        const goToSlide = (index) => {
+            currentIndex = Math.min(Math.max(index, 0), slides.length - 1);
+            renderSlide(currentIndex);
+        };
+
+        prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
+        nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+                goToSlide(currentIndex + 1);
+            }
+            if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+                goToSlide(currentIndex - 1);
+            }
+        });
+
+        toggleNotesButton.addEventListener('click', () => {
+            const isActive = notesElement.classList.toggle('active');
+            toggleNotesButton.textContent = isActive ? 'Hide speaker notes' : 'Show speaker notes';
+        });
+
+        goToSlide(currentIndex);
+    </script>
+</body>
+</html>
